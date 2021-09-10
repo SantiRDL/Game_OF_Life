@@ -2,21 +2,25 @@ using System;
 
 namespace PII_Game_Of_Life
 {
+    /// <summary>
+    /// Clase que contiene el tablero
+    /// Tiene las responsabilidades de:
+    ///     Conocer el tablero.
+    ///     Encargarse de la evolucion de los cambios del mismo respetando las reglas de Comway.
+    /// </summary>
     public class Tablero
     {   
-        private bool[,] gameBoard;
-        private int boardWidth;
-        private int boardHeight;
+        public bool[,] GameBoard;
 
-        public Tablero(bool[,] board)
-        {
-            
-            this.gameBoard = board;
-        }
     
+        /// <summary>
+        /// Metodo que se encarga de los cambios en el tablero.
+        /// </summary>
         public void Ciclo()
         {
-            bool[,] cloneboard = new bool[this.boardWidth, this.boardHeight];
+            int boardHeight = this.GameBoard.GetLength(1);
+            int boardWidth = this.GameBoard.GetLength(0);
+            bool[,] cloneboard = new bool[boardWidth, boardHeight];
             for (int x = 0; x < boardWidth; x++)
             {
                 for (int y = 0; y < boardHeight; y++)
@@ -26,27 +30,27 @@ namespace PII_Game_Of_Life
                     {
                         for (int j = y-1;j<=y+1;j++)
                         {
-                            if(i>=0 && i<boardWidth && j>=0 && j < boardHeight && this.gameBoard[i,j])
+                            if(i>=0 && i<boardWidth && j>=0 && j < boardHeight && this.GameBoard[i,j])
                             {
                                 aliveNeighbors++;
                             }
                         }
                     }
-                    if(this.gameBoard[x,y])
+                    if(this.GameBoard[x,y])
                     {
                         aliveNeighbors--;
                     }
-                    if (this.gameBoard[x,y] && aliveNeighbors < 2)
+                    if (this.GameBoard[x,y] && aliveNeighbors < 2)
                     {
                         //Celula muere por baja población
                         cloneboard[x,y] = false;
                     }
-                    else if (this.gameBoard[x,y] && aliveNeighbors > 3)
+                    else if (this.GameBoard[x,y] && aliveNeighbors > 3)
                     {
                         //Celula muere por sobrepoblación
                         cloneboard[x,y] = false;
                     }
-                    else if (!this.gameBoard[x,y] && aliveNeighbors == 3)
+                    else if (!this.GameBoard[x,y] && aliveNeighbors == 3)
                     {
                         //Celula nace por reproducción
                         cloneboard[x,y] = true;
@@ -54,11 +58,11 @@ namespace PII_Game_Of_Life
                     else
                     {
                         //Celula mantiene el estado que tenía
-                        cloneboard[x,y] = this.gameBoard[x,y];
+                        cloneboard[x,y] = this.GameBoard[x,y];
                     }
                 }
             }
-            this.gameBoard = cloneboard;
+            this.GameBoard = cloneboard;
             cloneboard = new bool[boardWidth, boardHeight];
         }
 

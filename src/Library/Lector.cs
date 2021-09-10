@@ -3,11 +3,17 @@ using System.IO;
 
 namespace PII_Game_Of_Life
 {
+    /// <summary>
+    /// Carga traduce un txt a bool[,] y lo carga en el atributo GameBoard de un objeto Tablero.
+    /// Responsabilidades:
+    ///     Traducir el txt a bool[,].
+    ///     Cargar el bool[,] al tablero.
+    ///Colabora con la clase Tablero.
+    /// </summary>
     public class Lector
     {
-        public static bool[,] Leer(string url)
+        public static void Leer(string url, Tablero tablero)
         {
-        //string url = ruta;
         string content = File.ReadAllText(url);
         string[] contentLines = content.Split('\n');
         bool[,] Board = new bool[contentLines.Length, contentLines[0].Length];
@@ -21,7 +27,7 @@ namespace PII_Game_Of_Life
                 }
             }
         }
-        return Board;
+        tablero.GameBoard = Board;
         }
     }
 }
